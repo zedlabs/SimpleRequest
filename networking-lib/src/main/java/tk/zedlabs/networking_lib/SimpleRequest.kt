@@ -95,7 +95,7 @@ object SimpleRequest {
                 val inpStream = if (validStatus) conn.inputStream else conn.errorStream
                 var read: Int
                 var totalRead = 0
-                val buf = ByteArray(bufferSize)
+                val buf = ByteArray(conn.contentLength)
                 while (inpStream.read(buf).also { read = it } != -1) {
                     bos.write(buf, 0, read)
                     totalRead += read
