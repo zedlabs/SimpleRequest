@@ -1,5 +1,7 @@
 package tk.zedlabs.networking_lib
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.json.JSONException
 import java.io.ByteArrayOutputStream
@@ -24,7 +26,6 @@ object SimpleRequest {
         internal var body: ByteArray? = null
 
         private var jsonObjReqListener: JSONObjectListener? = null
-        private var threadExecutor: ThreadExecutor = ThreadExecutor()
 
         fun url(url: String?): Request {
             this.url = url
@@ -46,7 +47,11 @@ object SimpleRequest {
 
         fun makeRequest(jsonObjectListener: JSONObjectListener?): Request {
             this.jsonObjReqListener = jsonObjectListener
-            threadExecutor.execute(RequestTask(this))
+
+            GlobalScope.launch {
+                RequestTask(this@Request).run()
+            }
+
             return this
         }
 
@@ -95,7 +100,7 @@ object SimpleRequest {
                 val inpStream = if (validStatus) conn.inputStream else conn.errorStream
                 var read: Int
                 var totalRead = 0
-                val buf = ByteArray(conn.contentLength)
+                val buf = ByteArray(100)
                 while (inpStream.read(buf).also { read = it } != -1) {
                     bos.write(buf, 0, read)
                     totalRead += read
