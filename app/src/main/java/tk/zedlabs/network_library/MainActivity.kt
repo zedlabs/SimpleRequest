@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
        /*
        * Sample usecase to make {@GET} request and display
        * the result in a textView
-       * */
+       */
 
         SimpleRequest.Request(GET)
             .url("https://jsonplaceholder.typicode.com/posts/1")
