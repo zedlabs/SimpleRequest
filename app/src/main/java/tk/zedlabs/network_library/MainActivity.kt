@@ -2,6 +2,7 @@ package tk.zedlabs.network_library
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import org.json.JSONObject
 import tk.zedlabs.networking_lib.JSONObjectListener
@@ -20,14 +21,19 @@ class MainActivity : AppCompatActivity() {
        * the result in a textView
        */
 
+        var result = ""
         SimpleRequest.Request(GET)
             .url("https://jsonplaceholder.typicode.com/posts/1")
             .makeRequest(object : JSONObjectListener {
                 override fun onResponse(res: JSONObject?) {
-                    tv.text = res.toString()
+                    result = res.toString()
+                    Log.e("Launcher-Activity", "onResponse: success -> $result")
+
                 }
+
                 override fun onFailure(e: Exception?) {
-                    tv.text = e.toString()
+                    result = e.toString()
+                    Log.e("Launcher-Activity", "onResponse: failure -> $result")
                 }
             })
     }
