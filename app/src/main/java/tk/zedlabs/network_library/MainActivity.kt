@@ -17,8 +17,7 @@ class MainActivity : AppCompatActivity() {
         val tv = findViewById<TextView>(R.id.tv_main)
 
        /*
-       * Sample usecase to make {@GET} request and display
-       * the result in a textView
+       * Sample usecase to make {@GET} request and log the result
        */
 
         var result = ""
