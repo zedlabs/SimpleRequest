@@ -1,4 +1,4 @@
-# Network-Library
+# Simple-Request
 
 #### A basic networking library implementation for android using Kotlin and Coroutines making use of the builder pattern
 
